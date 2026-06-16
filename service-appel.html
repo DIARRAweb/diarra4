@@ -6,31 +6,61 @@
 <title>Mali Wari - Service Appel</title>
 
 <style>
+*{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:Segoe UI,sans-serif;
-  background:#0d3b66;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top left, rgba(22,163,74,.35), transparent 35%),
+    linear-gradient(135deg,#06213d,#0d3b66);
   color:white;
-  padding:20px;
+  padding:22px;
+}
+
+.page-layout{
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:380px 1fr;
+  gap:22px;
+  align-items:start;
 }
 
 .card{
-  max-width:900px;
-  margin:20px auto;
-  background:white;
+  background:rgba(255,255,255,.96);
   color:#0d3b66;
-  border-radius:24px;
-  padding:20px;
-  box-shadow:0 20px 50px rgba(0,0,0,.25);
+  border-radius:28px;
+  padding:22px;
+  box-shadow:0 24px 60px rgba(0,0,0,.28);
+  border:1px solid rgba(255,255,255,.7);
 }
 
-h1{text-align:center;}
+.card h1{
+  margin:0 0 10px;
+  text-align:center;
+  font-size:25px;
+}
+
+.card p{
+  text-align:center;
+  color:#5b6b80;
+  font-weight:700;
+}
+
+.service-card{
+  position:sticky;
+  top:20px;
+}
 
 .call-item{
-  background:#f3f6fb;
-  padding:15px;
-  border-radius:18px;
+  background:linear-gradient(145deg,#f8fbff,#e8f3ff);
+  padding:16px;
+  border-radius:20px;
   margin-top:12px;
+  border-left:5px solid #16a34a;
+  box-shadow:0 10px 24px rgba(13,59,102,.12);
 }
 
 button{
@@ -38,83 +68,103 @@ button{
   padding:14px;
   margin-top:10px;
   border:none;
-  border-radius:14px;
-  font-weight:900;
+  border-radius:16px;
+  font-weight:950;
   cursor:pointer;
   color:white;
-  background:#16a34a;
+  background:linear-gradient(135deg,#16a34a,#22c55e);
+  box-shadow:0 10px 22px rgba(22,163,74,.25);
 }
 
-.end{background:#d90429;}
-.search-btn{background:#0d3b66;}
-audio{width:100%;margin-top:15px;}
+button:hover{transform:translateY(-2px)}
+
+.end{
+  background:linear-gradient(135deg,#d90429,#8b0000);
+  box-shadow:0 10px 22px rgba(217,4,41,.25);
+}
+
+.search-btn{
+  background:linear-gradient(135deg,#0d3b66,#14558f);
+}
+
+audio{
+  width:100%;
+  margin-top:16px;
+}
 
 .client-card{
-  margin-top:20px;
-  background:#f3f6fb;
+  margin-top:18px;
+  background:linear-gradient(145deg,#f8fbff,#e8f3ff);
   color:#0d3b66;
-  border-radius:22px;
-  padding:16px;
+  border-radius:24px;
+  padding:18px;
+  box-shadow:0 12px 30px rgba(13,59,102,.12);
 }
 
 .client-header{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:14px;
 }
 
 .client-header img{
-  width:70px;
-  height:70px;
+  width:78px;
+  height:78px;
   border-radius:50%;
   object-fit:cover;
-  border:3px solid #16a34a;
+  border:4px solid #16a34a;
 }
 
 .client-name{
-  font-size:20px;
-  font-weight:900;
+  font-size:22px;
+  font-weight:950;
 }
 
 .client-balance{
-  margin-top:12px;
-  padding:12px;
-  border-radius:16px;
+  margin-top:14px;
+  padding:14px;
+  border-radius:18px;
   background:white;
-  font-weight:900;
+  font-weight:950;
+  box-shadow:0 8px 20px rgba(13,59,102,.10);
 }
 
 .search-box{
   margin-top:18px;
+  display:grid;
+  grid-template-columns:1fr 160px;
+  gap:10px;
 }
 
 .search-box input{
   width:100%;
-  padding:13px;
-  border-radius:14px;
-  border:2px solid #ddd;
-  box-sizing:border-box;
-  font-weight:700;
+  padding:14px;
+  border-radius:16px;
+  border:2px solid #dbe5f0;
+  font-weight:800;
+  outline:none;
 }
 
 .history-item{
   margin-top:10px;
-  padding:12px;
-  border-radius:16px;
+  padding:14px;
+  border-radius:18px;
   background:white;
   cursor:pointer;
   border-left:5px solid #16a34a;
+  box-shadow:0 8px 20px rgba(13,59,102,.10);
 }
 
 .history-item:hover{
   background:#eafff1;
+  transform:translateX(3px);
 }
 
 .receipt-box{
-  margin-top:15px;
-  padding:14px;
-  border-radius:18px;
-  background:#0d3b66;
+  margin-top:16px;
+  padding:16px;
+  border-radius:20px;
+  background:linear-gradient(135deg,#0d3b66,#06213d);
   color:white;
 }
 
@@ -124,38 +174,57 @@ audio{width:100%;margin-top:15px;}
 
 @keyframes pulse{
   0%{box-shadow:0 0 0 rgba(22,163,74,0);}
-  50%{box-shadow:0 0 18px rgba(22,163,74,.5);}
+  50%{box-shadow:0 0 22px rgba(22,163,74,.6);}
   100%{box-shadow:0 0 0 rgba(22,163,74,0);}
+}
+
+@media(max-width:850px){
+  .page-layout{
+    grid-template-columns:1fr;
+  }
+
+  .service-card{
+    position:relative;
+    top:auto;
+  }
+
+  .search-box{
+    grid-template-columns:1fr;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h1>📞 Service Appel</h1>
-  <p>Appels entrants des utilisateurs Mali Wari.</p>
+<div class="page-layout">
 
-  <div id="callsList"></div>
+  <div class="card service-card">
+    <h1>📞 Service Appel</h1>
+    <p>Appels entrants des utilisateurs Mali Wari</p>
 
-  <audio id="remoteAudio" autoplay playsinline controls></audio>
+    <div id="callsList"></div>
 
-  <button class="end" onclick="endCurrentCall()">Raccrocher</button>
+    <audio id="remoteAudio" autoplay playsinline controls></audio>
 
-  <audio id="adminRingSound" loop src="https://actions.google.com/sounds/v1/alarms/phone_alerts_and_rings.ogg"></audio>
-</div>
+    <button class="end" onclick="endCurrentCall()">📴 Raccrocher</button>
 
-<div class="card">
-  <h1>👤 Fiche client</h1>
-
-  <div class="search-box">
-    <input id="adminSearchInput" placeholder="Rechercher par numéro ou ID transaction">
-    <button class="search-btn" onclick="adminSearch()">🔍 Rechercher</button>
+    <audio id="adminRingSound" loop src="https://actions.google.com/sounds/v1/alarms/phone_alerts_and_rings.ogg"></audio>
   </div>
 
-  <div id="clientInfo"></div>
-  <div id="clientHistory"></div>
-  <div id="transactionReceipt"></div>
+  <div class="card client-panel">
+    <h1>👤 Fiche client</h1>
+
+    <div class="search-box">
+      <input id="adminSearchInput" placeholder="Numéro ou ID transaction">
+      <button class="search-btn" onclick="adminSearch()">🔍 Rechercher</button>
+    </div>
+
+    <div id="clientInfo"></div>
+    <div id="clientHistory"></div>
+    <div id="transactionReceipt"></div>
+  </div>
+
 </div>
 
 <script type="module">
