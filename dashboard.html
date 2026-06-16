@@ -9411,6 +9411,31 @@ Modifier mot de passe
 
 <audio id="serviceCallRingback" loop src="https://actions.google.com/sounds/v1/alarms/phone_alerts_and_rings.ogg"></audio>
 
+<div id="userCallBox" style="
+  display:none;
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:99999;
+  background:white;
+  color:#0d3b66;
+  padding:16px;
+  border-radius:22px;
+  box-shadow:0 18px 45px rgba(0,0,0,.35);
+  width:min(92%,360px);
+  text-align:center;
+  font-weight:900;
+">
+  <div id="userCallStatus">📞 Appel en cours...</div>
+  <button onclick="endServiceCall(true)" style="
+    background:linear-gradient(135deg,#d90429,#8b0000);
+    margin-top:12px;
+  ">
+    📴 Raccrocher
+  </button>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
@@ -15160,6 +15185,12 @@ window.startServiceCall = async function(){
       const status = snap.val();
 
       if(status === "accepted"){
+
+        const callStatus = document.getElementById("userCallStatus");
+          if(callStatus){
+            callStatus.innerText = "✅ Appel connecté avec le service";
+        }
+
         if(ringback){
           ringback.pause();
           ringback.currentTime = 0;
@@ -15171,6 +15202,17 @@ window.startServiceCall = async function(){
         endServiceCall(false);
       }
     });
+
+    const callBox = document.getElementById("userCallBox");
+      const callStatus = document.getElementById("userCallStatus");
+
+      if(callBox){
+        callBox.style.display = "block";
+      }
+
+      if(callStatus){
+        callStatus.innerText = "📞 Appel en cours de sonnerie...";
+      }
 
     alert("📞 Appel envoyé au service Mali Wari...");
 
@@ -15207,6 +15249,17 @@ window.endServiceCall = async function(updateStatus = true){
         status: "ended",
         endedAt: Date.now()
       });
+    }
+
+    const callBox = document.getElementById("userCallBox");
+      const callStatus = document.getElementById("userCallStatus");
+
+      if(callBox){
+        callBox.style.display = "none";
+      }
+
+      if(callStatus){
+        callStatus.innerText = "📞 Appel en cours...";
     }
 
     serviceCallPeer = null;
