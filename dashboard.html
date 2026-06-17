@@ -14233,34 +14233,71 @@ refreshBalanceDisplay();
 
 }
 
-function showToast(message){
+function showToast(message, type = "success"){
+  const oldToast = document.getElementById("globalToast");
+  if(oldToast) oldToast.remove();
 
-const sound = document.getElementById("notifSound");
-sound.play();
+  const toast = document.createElement("div");
+  toast.id = "globalToast";
+  toast.innerText = message;
 
-const toast = document.createElement("div");
+  const bg =
+    type === "error"
+      ? "linear-gradient(45deg,#d90429,#8b0000)"
+      : type === "warning"
+      ? "linear-gradient(45deg,#ff9a00,#ff6a00)"
+      : "linear-gradient(45deg,#00c853,#00e676)";
 
-toast.innerText = message;
+  toast.style = `
+    position:fixed;
+    bottom:22px;
+    left:50%;
+    transform:translateX(-50%);
+    background:${bg};
+    color:white;
+    padding:13px 20px;
+    border-radius:16px;
+    box-shadow:0 12px 35px rgba(0,0,0,0.35);
+    z-index:999999;
+    font-weight:900;
+    text-align:center;
+    max-width:90%;
+    animation:slideUp 0.35s ease;
+  `;
 
-toast.style = `
-position:fixed;
-bottom:20px;
-left:50%;
-transform:translateX(-50%);
-background:linear-gradient(45deg,#00c853,#00e676);
-color:white;
-padding:12px 20px;
-border-radius:12px;
-box-shadow:0 10px 30px rgba(0,0,0,0.3);
-z-index:9999;
-animation:slideUp 0.4s ease;
-`;
+  document.body.appendChild(toast);
 
-document.body.appendChild(toast);
+  setTimeout(()=>{
+    toast.style.opacity = "0";
+    toast.style.transform = "translateX(-50%) translateY(20px)";
+    toast.style.transition = "0.35s ease";
+  }, 2600);
 
-setTimeout(()=>toast.remove(),3000);
-
+  setTimeout(()=>{
+    toast.remove();
+  }, 3000);
 }
+
+/* =========================
+✅ REMPLACER TOUS LES ALERT PAR NOTIFICATION 3 SECONDES
+========================= */
+const nativeAlert = window.alert;
+
+window.alert = function(message){
+  const text = String(message || "");
+
+  let type = "success";
+
+  if(text.includes("❌")){
+    type = "error";
+  }
+
+  if(text.includes("⚠️") || text.includes("⚠")){
+    type = "warning";
+  }
+
+  showToast(text, type);
+};
 
 
 /* =========================
